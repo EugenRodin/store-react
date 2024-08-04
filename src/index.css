@@ -124,3 +124,29 @@ h1 {
   grid-area: img;
   object-fit: cover;
 }
+.modal {
+  width: 40em;
+  height: 15em;
+  background: lightblue;
+  border-radius: 1em;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  padding: 3em;
+  left: calc(50% - 20em);
+  top: calc(50% - 15em);
+}
+.modal__title {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+.modal__button {
+  margin: 1em;
+  padding: 1em;
+  background: tomato;
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
