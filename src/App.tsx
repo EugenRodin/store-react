@@ -61,6 +61,7 @@ const App = () => {
                     <Route path="/users" element={<Users />} />
                     <Route path="/todos" element={<Todos />} />
                 </Routes>
+                <p className="status">Status: {state}</p>
 
                 <div
                     className="modal"
