@@ -1,12 +1,18 @@
 import { useFetch } from '../hooks/useFetch.ts'
 import { ProductInterface } from '../types/Product.Interface.ts'
+import {API_ITEMS_PER_PAGE_LIMIT, createUrl} from "../utils/mockApi.ts";
+import {useState} from "react";
+import Product from "../components/Product.tsx";
+import AddProductutton from "../components/AddProductButton.tsx";
 
 const Home = () => {
+    const [page, setPage] = useState<number>(1)
+    const [reload, setReload] = useState('0')
     const {
         data: products,
         error,
         isLoading
-    } = useFetch<ProductInterface>('https://655c7acd25b76d9884fd5a52.mockapi.io/products')
+    } = useFetch<ProductInterface>(createUrl(1), undefined , reload)
 
     return (
         <div>
@@ -14,18 +20,33 @@ const Home = () => {
             {isLoading && <p className="loading">Loading...</p>}
             {error && <p className="error">{error}</p>}
             {!isLoading && !error && (
-                <ul className="products-list">
-                    {!!products.length &&
-                        products.map((product: ProductInterface) => (
-                            <li key={product.id} className="product-item">
-                                <h2 className="product-item__title">{product.name}</h2>
-                                <p className="product-item__description">{product.description}</p>
-                                <p className="product-item__category">{product.category}</p>
-                                <p className="product-item__price">{product.price}</p>
-                                <img className="product-item__image" src={product.image} alt={product.name} />
-                            </li>
-                        ))}
-                </ul>
+                <div className="content">
+                    <div className="buttons-group">
+                        <AddProductutton />
+                        <div className="pagination">
+                            <button
+                                className="pagination__btn"
+                                disabled={page === 1} onClick={() => setPage(prevState => prevState - 1)}
+                            >
+                                Previous page
+                            </button>
+                            <button
+                                className="pagination__btn"
+                                disabled={products.length < API_ITEMS_PER_PAGE_LIMIT}
+                                onClick={() => setPage(prevState => prevState + 1)}
+                            >
+                                Next page
+                            </button>
+                        </div>
+                    </div>
+
+                    <ul className="products-list">
+                        {!!products.length &&
+                            products.map((product: ProductInterface) => (
+                                <Product key={product.id} product={product} reload={() => setReload(product.id)} />
+                            ))}
+                    </ul>
+                </div>
             )}
         </div>
     )
