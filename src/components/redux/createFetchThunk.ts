@@ -6,14 +6,14 @@ export function createFetchThunk<T>(typePrefix: string) {
         typePrefix,
         async (url: string, { rejectWithValue }) => {
             try {
-                const response = await axios.get<T[]>(url)
+                const response = await axios.get<T[]>(url);
                 if (response.status !== 200) {
-                    throw new Error(`Error: ${response.status}`)
+                    throw new Error(`Error: ${response.status}`);
                 }
-                return response.data
+                return response.data;
             } catch (error) {
-                const axiosError = error as AxiosError
-                return rejectWithValue(axiosError.message)
+                const axiosError = error as AxiosError;
+                return rejectWithValue(axiosError.message);
             }
         }
     )
