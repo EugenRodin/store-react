@@ -1,5 +1,9 @@
 import {NavLink} from "react-router-dom"
-import {LinkInterface} from "../types/LinkInterface.ts";
+import {LinkInterface} from "../types/LinkInterface.ts"
+import {useDispatch} from "react-redux"
+import {RootState} from "./redux/store.ts"
+import {useSelector} from "react-redux"
+import {login, logout} from "./redux/authSlice.ts"
 
 const links: LinkInterface[] = [
     {path: "/", name: "Home"},
@@ -10,6 +14,19 @@ const links: LinkInterface[] = [
 
 
 const Navbar = () => {
+    const dispatch = useDispatch()
+    const {isLogged} = useSelector((state: RootState) => state.auth)
+
+    console.log(isLogged)
+
+    const handleLogin = () => {
+        dispatch(login())
+    }
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
+
     return (
         <nav className="navbar">
             <div className="container">
@@ -21,6 +38,16 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                     ))}
+
+                    {isLogged ? (
+                        <li className="navbar__item">
+                            <button className="navbar__link" onClick={handleLogout}>Logout</button>
+                        </li>
+                    ) : (
+                        <li className="navbar__item">
+                            <button className="navbar__link" onClick={handleLogin}>Login</button>
+                        </li>
+                    )}
                 </ul>
 
             </div>

@@ -1,9 +1,10 @@
 export interface ProductInterface {
     id: string
     name: string
-    price: string | number
+    price: number
     description: string
     category: string
     image: string
+    title?: string
 
 }

@@ -1,11 +1,13 @@
+import {Provider} from "react-redux"
 import {useIdleTimer} from "react-idle-timer"
 import {useState, useEffect} from "react"
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Navbar from "./components/Navbar.tsx"
 import Users from "./pages/Users.tsx"
 import Posts from "./pages/Posts.tsx"
-import Home from "./pages/Home.tsx"
 import Todos from "./pages/Todos.tsx"
+import Products from "./pages/Products"
+import {store} from "./components/redux/store.ts"
 
 const timeout = 10_000
 const promptBeforeIdle = 5_000
@@ -52,29 +54,31 @@ const App = () => {
     }
 
     return (
-        <BrowserRouter>
-            <Navbar />
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/posts" element={<Posts />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/todos" element={<Todos />} />
-                </Routes>
-                <p className="status">Status: {state}</p>
+        <Provider store={store}>
+            <BrowserRouter>
+                <Navbar />
+                <div className="container">
+                    <Routes>
+                        <Route path="/" element={<Products />} />
+                        <Route path="/posts" element={<Posts />} />
+                        <Route path="/users" element={<Users />} />
+                        <Route path="/todos" element={<Todos />} />
+                    </Routes>
+                    <p className="status">Status: {state}</p>
 
-                <div
-                    className="modal"
-                    style={{
-                        display: open ? 'flex' : 'none'
-                    }}
-                >
-                    <h3 className="modal__title">Are you still here?</h3>
-                    <p className="modal__text">Logging out in {remaining} seconds</p>
-                    <button className="modal__button" onClick={HandleStillHere}>Im still here</button>
+                    <div
+                        className="modal"
+                        style={{
+                            display: open ? 'flex' : 'none'
+                        }}
+                    >
+                        <h3 className="modal__title">Are you still here?</h3>
+                        <p className="modal__text">Logging out in {remaining} seconds</p>
+                        <button className="modal__button" onClick={HandleStillHere}>Im still here</button>
+                    </div>
                 </div>
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Provider>
     )
 }
 

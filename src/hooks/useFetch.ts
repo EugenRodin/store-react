@@ -11,7 +11,7 @@ export const useFetch = <T>(url: string, limit?: number, reload?: string) => {
         const fetchData = async () => {
             setIsLoading(true)
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                await new Promise((resolve) => setTimeout(resolve, 20));
                 const response = await axios.get<T[]>(limit ? `${url}?_limit=${limit}` : url, {
                     cancelToken: cancelToken.token,
                 })

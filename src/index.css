@@ -9,6 +9,8 @@ body {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   color: black;
   overflow-y: scroll;
+  background-color: #d1ceda;
+
 }
 
 button {
@@ -78,9 +80,10 @@ h1 {
 /* navbar */
 .navbar {
   padding: 20px 0;
-  background-color: #3498db;
+  background-color: #0b3328;
   margin-bottom: 40px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /*#3498db*/
 }
 
 .navbar__list {
