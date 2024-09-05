@@ -1,8 +1,9 @@
-import { PostInterface } from '../types/PostInterface.ts'
-import {AppDispatch} from "../components/redux/store.ts"
-import {useDispatch, useSelector} from "react-redux"
-import {fetchAllPosts, selectPosts, selectPostsError, selectPostsLoading} from "../components/redux/postsSlice.ts"
-import {useEffect} from "react"
+import { PostInterface } from '../types/Post.interface.ts'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../redux/store.ts'
+import { fetchAllPosts, selectPosts, selectPostsError, selectPostsLoading } from '../redux/postsSlice.ts'
+import { useEffect } from 'react'
+
 const Posts = () => {
     const dispatch = useDispatch<AppDispatch>()
     const posts = useSelector(selectPosts)
@@ -10,12 +11,13 @@ const Posts = () => {
     const error = useSelector(selectPostsError)
 
     useEffect(() => {
-        dispatch(fetchAllPosts('https://jsonplaceholder.typicode.com/posts? _limit=20'))
+        dispatch(fetchAllPosts('https://jsonplaceholder.typicode.com/posts?_limit=20'))
     }, [dispatch])
+
     return (
         <div>
-            <h1>Posts</h1>
-            {isLoading && <h2>Завантаження...</h2>}
+            <h1>Posts page</h1>
+            {isLoading && <h2>Loading...</h2>}
             {error && <h2 className="error">{error}</h2>}
             {!isLoading && !error && (
                 <ul>{!!posts.length && posts.map((post: PostInterface) => <li key={post.id}>{post.title}</li>)}</ul>

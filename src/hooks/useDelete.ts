@@ -1,5 +1,5 @@
-import {useState} from "react";
-import axios, {AxiosError} from "axios";
+import { useState } from 'react'
+import axios from 'axios'
 
 export const useDelete = (url: string) => {
     const [error, setError] = useState<string | null>(null)
@@ -7,11 +7,11 @@ export const useDelete = (url: string) => {
     const del = async (id: string) => {
         try {
             const response = await axios.delete(`${url}/${id}`)
-            console.log(response.data)
-        } catch (err: unknown) {
-            setError((err as AxiosError).message)
+            return response.data
+        } catch (error) {
+            setError(`Error deleting data, ${(error as Error).message}`)
         }
     }
 
-    return {del, error}
+    return { delete: del, error }
 }

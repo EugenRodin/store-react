@@ -1,8 +1,8 @@
-import {UserInterface} from "../types/User.Interface.ts"
-import {useDispatch, useSelector} from "react-redux"
-import {AppDispatch} from "../components/redux/store.ts"
-import {selectUsers, selectUsersLoading, selectUsersError, fetchAllUsers} from "../components/redux/userSlice.ts"
-import {useEffect} from "react";
+import { UserInterface } from '../types/User.interface.ts'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../redux/store.ts'
+import { fetchAllUsers, selectUsers, selectUsersError, selectUsersLoading } from '../redux/userSlice.ts'
 
 const Users = () => {
     const dispatch = useDispatch<AppDispatch>()

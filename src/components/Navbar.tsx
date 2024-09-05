@@ -1,9 +1,9 @@
 import {NavLink} from "react-router-dom"
-import {LinkInterface} from "../types/LinkInterface.ts"
+import {LinkInterface} from "../../types/LinkInterface.ts"
 import {useDispatch} from "react-redux"
-import {RootState} from "./redux/store.ts"
+import {RootState} from "../redux/store.ts"
 import {useSelector} from "react-redux"
-import {login, logout} from "./redux/authSlice.ts"
+import {login, logout} from "../redux/authSlice.ts"
 
 const links: LinkInterface[] = [
     {path: "/", name: "Home"},

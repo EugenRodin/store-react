@@ -1,4 +1,4 @@
-import { ProductInterface } from "../../types/Product.Interface.ts"
+import { ProductInterface } from "../../types/Product.interface.ts"
 import { FormEvent, useState } from "react"
 import { PRODUCT_CATEGORIES } from "../../data/mockData.ts"
 import InputField from "./InputField.tsx"

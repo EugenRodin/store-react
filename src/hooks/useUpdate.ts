@@ -1,27 +1,17 @@
-import { ProductInterface } from "../types/Product.Interface.ts"
+import { useState } from 'react'
+import axios from 'axios'
+import { ProductInterface } from '../types/Product.interface.ts'
 
 export const useUpdate = (url: string) => {
+    const [error, setError] = useState<string | null>(null)
     const update = async (product: ProductInterface) => {
         try {
-            const response = await fetch(`${url}/${product.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(product),
-            })
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`)
-            }
-
-            const updatedProduct = await response.json()
-            return updatedProduct
+            const response = await axios.put(`${url}/${product.id}`, product)
+            return response.data
         } catch (error) {
-            console.error('Failed to update product:', error)
-            throw error;
+            setError(`Error updating product: ${(error as Error).message}`)
         }
     }
 
-    return { update, error: null }
+    return { update, error }
 }

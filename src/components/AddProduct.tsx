@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Modal from "../modals/Modal.tsx"
 import ProductForm from "./form/ProductForm.tsx"
-import { ProductInterface } from "../types/Product.Interface.ts"
+import { ProductInterface } from "../types/Product.interface.ts"
 import { useAdd } from "../hooks/useAdd.ts";
 import { API_URL } from "../utils/mockApi.ts";
 import { INITIAL_PRODUCT } from "../data/mockData.ts"

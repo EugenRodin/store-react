@@ -2,7 +2,7 @@ import {ReactNode, useState} from 'react'
 import Modal from '../modals/Modal.tsx'
 import ProductForm from './form/ProductForm.tsx'
 import {useUpdate} from '../hooks/useUpdate.ts'
-import {ProductInterface} from '../types/Product.Interface.ts'
+import {ProductInterface} from '../types/Product.interface.ts'
 import {API_URL} from '../utils/mockApi.ts'
 
 interface  EditProductButtonProps {

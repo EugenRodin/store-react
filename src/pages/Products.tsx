@@ -1,37 +1,42 @@
-import { useFetch } from '../hooks/useFetch.ts'
-import { ProductInterface } from '../types/Product.Interface.ts'
-import {API_ITEMS_PER_PAGE_LIMIT, createUrl} from "../utils/mockApi.ts"
-import {useState} from "react";
-import Product from "../components/Product.tsx";
-import AddProduct from "../components/AddProduct.tsx"
-import {debounce} from "../utils/debounce.ts"
-import {ORDER_BY_LIST, SORT_BY_LIST} from "../data/mockData.ts";
+import { ProductInterface } from '../types/Product.interface.ts'
+import { API_ITEMS_PER_PAGE_LIMIT, createUrl } from '../utils/mockApi.ts'
+import { useEffect, useRef, useState } from 'react'
+import Product from '../components/Product.tsx'
+import AddProduct from '../components/AddProduct.tsx'
+import { debounce } from '../utils/debounce.ts'
+import { ORDER_BY_LIST, SORT_BY_LIST } from '../data/mockData.ts'
 import { MdRefresh } from 'react-icons/md'
-import { useRef } from 'react'
-import InputField from "../components/form/InputField.tsx";
-import SelectField from "../components/form/SelectField.tsx";
+import InputField from '../components/form/InputField.tsx'
+import SelectField from '../components/form/SelectField.tsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store.ts'
+import { fetchAllProducts, selectProducts, selectProductsError, selectProductsLoading } from '../redux/productsSlice.ts'
 
 const Products = () => {
-    const [page, setPage] = useState<number>(1)
+    const [page, setPage] = useState(1)
     const [name, setName] = useState('')
     const [sort, setSort] = useState('')
-    const [order, setOrder] = useState('asc')
+    const [order, setOrder] = useState('')
     const [reload, setReload] = useState('0')
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const {
-        data: products,
-        error,
-        isLoading
-    } = useFetch<ProductInterface>(createUrl(page, name, sort, order), undefined, reload)
+    const dispatch = useDispatch<AppDispatch>()
+    const products = useSelector(selectProducts)
+    const isLoading = useSelector(selectProductsLoading)
+    const error = useSelector(selectProductsError)
+    const { isLogged } = useSelector((state: RootState) => state.auth)
+
+    useEffect(() => {
+        dispatch(fetchAllProducts(createUrl(page, name, sort, order)))
+    }, [dispatch, page, name, sort, order, reload])
 
     const debouncedSetName = debounce(setName, 1000)
 
     const resetFilters = () => {
         setName('')
         setSort('')
-        setOrder('asc')
+        setOrder('')
         inputRef.current && (inputRef.current.value = '')
     }
 
@@ -43,14 +48,12 @@ const Products = () => {
                     ref={inputRef}
                     id="filter"
                     type="text"
-                    value={name}
-                    label="Filter"
-                    placeholder="Filter products by name"
+                    placeholder="Filter products by name..."
                     onChange={(e) => debouncedSetName(e.target.value)}
                 />
-                <SelectField id={sort} value={sort} onChange={(e) => setSort(e.target.value)} options={SORT_BY_LIST} />
-                <SelectField id={order} value={order} onChange={(e) => setOrder(e.target.value)} options={ORDER_BY_LIST} />
-                <button className="reset-filters" onClick={resetFilters}>
+                <SelectField id="sort" value={sort} onChange={(e) => setSort(e.target.value)} options={SORT_BY_LIST} />
+                <SelectField id="order" value={order} onChange={(e) => setOrder(e.target.value)} options={ORDER_BY_LIST} />
+                <button onClick={resetFilters}>
                     <MdRefresh />
                 </button>
             </div>
@@ -59,18 +62,19 @@ const Products = () => {
             {!isLoading && !error && (
                 <div className="content">
                     <div className="buttons-group">
-                        <AddProduct />
+                        {isLogged && <AddProduct />}
                         <div className="pagination">
                             <button
                                 className="pagination__btn"
-                                disabled={page === 1} onClick={() => setPage(prevState => prevState - 1)}
+                                disabled={page === 1}
+                                onClick={() => setPage((prevState) => prevState - 1)}
                             >
                                 Previous page
                             </button>
                             <button
                                 className="pagination__btn"
                                 disabled={products.length < API_ITEMS_PER_PAGE_LIMIT}
-                                onClick={() => setPage(prevState => prevState + 1)}
+                                onClick={() => setPage((prevState) => prevState + 1)}
                             >
                                 Next page
                             </button>
@@ -80,7 +84,7 @@ const Products = () => {
                     <ul className="products-list">
                         {!!products.length &&
                             products.map((product: ProductInterface) => (
-                                <Product key={product.id} product={product} reload={() => setReload(product.id)} />
+                                <Product product={product} reload={() => setReload(product.id + Date.now())} key={product.id} />
                             ))}
                     </ul>
                 </div>

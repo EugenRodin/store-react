@@ -1,24 +1,27 @@
-import { ChangeEvent } from "react"
-import {ProductCategoryInterface} from "../../data/mockData.ts";
+import { ChangeEvent } from 'react'
+import { ProductCategoriesInterface } from '../../data/mockData.ts'
 
 interface SelectFieldPropsInterface {
     id: string
-    value?: string
+    value: string
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+    options: ProductCategoriesInterface[]
     required?: boolean
-    options: ProductCategoryInterface[]
 }
 
-const SelectField = ({ id, value, onChange, required = true, options }: SelectFieldPropsInterface) => {
+const SelectField = ({ id, value, onChange, options, required = true }: SelectFieldPropsInterface) => {
+    console.log(id)
+    console.log(value)
+
     return (
         <div className="form-group">
-            <label className="form-label" htmlFor={id}>
-                {id.charAt(0).toUpperCase() + id.slice(1)}
+            <label className="form-label" htmlFor="category">
+                {id.charAt(0).toUpperCase() + id.slice(1)}:
             </label>
-            <select className="form-select" id={id} value={value} onChange={onChange} required={required}>
-                <option value="">Please select a {id}</option>
-                {options.map((option: ProductCategoryInterface) => (
-                    <option value={option.value} key={option.value}>
+            <select className="form-control" id={id} value={value} onChange={onChange} required={required}>
+                <option value="">Please select a {id}...</option>
+                {options.map((option: ProductCategoriesInterface) => (
+                    <option key={option.value} value={option.value}>
                         {option.text}
                     </option>
                 ))}

@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {ProductInterface} from "../types/Product.Interface.ts";
-import axios, {AxiosError} from "axios";
+import { useState } from 'react'
+import { ProductInterface } from '../types/Product.interface.ts'
+import axios from 'axios'
 
 export const useAdd = (url: string) => {
     const [error, setError] = useState<string | null>(null)
@@ -8,9 +8,10 @@ export const useAdd = (url: string) => {
         try {
             const response = await axios.post(url, product)
             return response.data
-        } catch (err: unknown) {
-            setError(`Error: ${(err as AxiosError).message}`)
+        } catch (error) {
+            setError(`Error adding product: ${(error as Error).message}`)
         }
     }
-    return {error, add}
+
+    return { add, error }
 }

@@ -1,4 +1,4 @@
-import { ProductInterface } from "../types/Product.Interface.ts"
+import { ProductInterface } from "../types/Product.interface.ts"
 import { FaTrash, FaEdit } from "react-icons/fa"
 import {AxiosError} from "axios"
 import {API_URL} from "../utils/mockApi.ts"

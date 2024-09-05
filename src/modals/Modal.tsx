@@ -1,33 +1,30 @@
-import {ReactNode} from "react";
-import {createPortal} from "react-dom";
+import { MouseEvent, ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 
 interface ModalPropsInterface {
     children: ReactNode
     onClose: () => void
 }
 
-const ModalRoot = document.getElementById("modal-root")
+const modalRoot = document.getElementById('modal-root')
 
-const Modal = ({children, onClose}: ModalPropsInterface) => {
-    if (!ModalRoot) return null
+const Modal = ({ children, onClose }: ModalPropsInterface) => {
+    if (!modalRoot) return null
 
-    const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
-    };
-
-    const handleContentClick = (e: React.MouseEvent) => {
+    const handleContentClick = (e: MouseEvent) => {
         e.stopPropagation()
     }
 
     return createPortal(
-        <div className="modal-overlay" onClick={handleOverlayClick}>
+        <div className="modal-overlay" onClick={onClose}>
             <div className="modal" onClick={handleContentClick}>
-                <span className="modal__close" onClick={onClose}>x</span>
+        <span className="modal__close" onClick={onClose}>
+          ×
+        </span>
                 {children}
             </div>
-        </div>, ModalRoot
+        </div>,
+        modalRoot
     )
 }
 
