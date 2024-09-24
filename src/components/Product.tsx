@@ -10,7 +10,7 @@ interface ProductPropsInterface {
 }
 
 const Product = ({ product: { id, name, description, category, price, image }, reload }: ProductPropsInterface) => {
-    const {del: deleteProduct} = useDelete(API_URL)
+    const {delete: deleteProduct} = useDelete(API_URL)
     const handleDelete = async () => {
         try{
             await deleteProduct(id)

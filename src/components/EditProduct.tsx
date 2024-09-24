@@ -37,7 +37,7 @@ const EditProduct = ({children, product, reload}: EditProductButtonProps) => {
             {showModal && (
                 <Modal onClose={handleClose}>
                     <h2 className="modal__title">
-                        Edit product #{product.id}, {product.title}
+                        Edit product #{product.id}, {product.name}
                     </h2>
                     {error && <p className="error">{error}</p>}
                     <ProductForm onSubmit={handleSubmit} product={product} />

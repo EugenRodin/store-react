@@ -2,6 +2,7 @@ import { ProductInterface } from "../../types/Product.interface.ts"
 import { FormEvent, useState } from "react"
 import { PRODUCT_CATEGORIES } from "../../data/mockData.ts"
 import InputField from "./InputField.tsx"
+import SelectField from "./SelectField.tsx";
 
 
 interface ProductFormPropsInterface {
@@ -34,7 +35,6 @@ const ProductForm = ({ onSubmit, product }: ProductFormPropsInterface) => {
     return (
         <form onSubmit={handleSubmit}>
             <InputField
-                label="Name"
                 id="name"
                 type="text"
                 value={name}
@@ -43,7 +43,6 @@ const ProductForm = ({ onSubmit, product }: ProductFormPropsInterface) => {
                 required
             />
             <InputField
-                label="Description"
                 id="description"
                 type="textarea"
                 value={description}
@@ -52,7 +51,6 @@ const ProductForm = ({ onSubmit, product }: ProductFormPropsInterface) => {
                 required
             />
             <InputField
-                label="Price"
                 id="price"
                 type="number"
                 value={`${price}`}
@@ -61,7 +59,6 @@ const ProductForm = ({ onSubmit, product }: ProductFormPropsInterface) => {
                 required
             />
             <InputField
-                label="Image"
                 id="image"
                 type="text"
                 value={image}
@@ -69,13 +66,10 @@ const ProductForm = ({ onSubmit, product }: ProductFormPropsInterface) => {
                 placeholder="Image URL..."
                 required
             />
-            <InputField
-                label="Category"
+            <SelectField
                 id="category"
-                type="select"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder="Please select a category"
                 required
                 options={PRODUCT_CATEGORIES}
             />

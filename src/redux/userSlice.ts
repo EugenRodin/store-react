@@ -1,4 +1,4 @@
-import { UserInterface } from '../types/User.interface.ts'
+import { UserInterface } from '../types/User.Interface.ts'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './store.ts'
 import { createFetchThunk } from './createFetchThunk.ts'

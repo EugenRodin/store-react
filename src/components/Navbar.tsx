@@ -1,5 +1,5 @@
 import {NavLink} from "react-router-dom"
-import {LinkInterface} from "../../types/LinkInterface.ts"
+import {LinkInterface} from "../types/LinkInterface.ts"
 import {useDispatch} from "react-redux"
 import {RootState} from "../redux/store.ts"
 import {useSelector} from "react-redux"

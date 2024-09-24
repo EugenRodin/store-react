@@ -1,4 +1,4 @@
-import { UserInterface } from '../types/User.interface.ts'
+import { UserInterface } from '../types/User.Interface.ts'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../redux/store.ts'
